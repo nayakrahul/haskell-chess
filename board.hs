@@ -2,7 +2,6 @@ import Data.Foldable
 import Data.Sequence
 
 type Board = [[Maybe Piece]]
---type Status = Maybe Piece
 data Piece = Piece{color::Color,player::Player}
 data Status = Maybe Piece
 data Color = White | Black 
