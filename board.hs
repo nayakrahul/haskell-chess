@@ -1,9 +1,10 @@
 import Data.Foldable 
 import Data.Sequence
+import Rook
 
 type Board = [[Maybe Piece]]
 data Piece = Piece{color::Color,player::Player}
-data Status = Maybe Piece
+
 data Color = White | Black 
 data Player = King | Queen | Rook | Knight | Bishop | Pawn 
 
@@ -24,6 +25,15 @@ instance Show Player where
 	show Bishop = "Bishop"
 	show Pawn = "Pawn" 
 
+instance Eq Player where
+	King == King = True
+	Queen == Queen = True
+	Rook == Rook = True
+	Knight == Knight = True
+	Bishop == Bishop = True
+	Pawn == Pawn = True
+	_ == _ = False
+
 instance Show Piece where
 	show Piece{color=White,player=King}= "WK"
 	show Piece{color=White,player=Queen} = "WQ"
@@ -31,7 +41,7 @@ instance Show Piece where
 	show Piece{color=White,player=Rook} = "WR"
 	show Piece{color=White,player=Knight} = "WN"
 	show Piece{color=White,player=Pawn} = "WP"
-	show Piece{color=Black,player=King} = "Bk"
+	show Piece{color=Black,player=King} = "BK"
 	show Piece{color=Black,player=Queen} = "BQ"
 	show Piece{color=Black,player=Bishop} = "BB"
 	show Piece{color=Black,player=Rook} = "BR"
@@ -92,7 +102,10 @@ move x b chance = do
 	 					let final_empty = (convert ((b!!a3)!!a4)) == "  "
 	 					let col2 | final_empty = if col1 == White then Black else White
 	 						 	 | otherwise   = color $ (\(Just x) -> x) ((b!!a3)!!a4)
-					 	if ((chance == True && col1 == White) || (chance == False && col1 == Black)) && col1 /= col2
+	 					let play1 = player $ (\(Just x) -> x) ((b!!a1)!!a2)
+	 					let valid_move | play1 == Rook = Rook.validPath a1 a2 a3 a4 b
+	 								   | otherwise = True
+					 	if ((chance == True && col1 == White) || (chance == False && col1 == Black)) && col1 /= col2 && valid_move
 					 		then do
 					 			let board = changeBoard a1 a2 a3 a4 b
 					 			let board' = (map.map) convert board
@@ -127,7 +140,7 @@ convert Nothing = "  "
 main = do
 	 let board' = (map.map) convert initialBoard
 	 let print' n | n == 7    = print ((board'!!n))
-	 					 | otherwise = do 
+	 			  | otherwise = do 
 	 			  						print ((board'!!n))
 	 			  						print' (n+1)
 	 print' 0
@@ -150,7 +163,10 @@ main = do
 	 				let final_empty = (convert ((initialBoard!!a3)!!a4)) == "  "
 	 				let col2 | final_empty = Black
 	 						 | otherwise   = color $ (\(Just x) -> x) ((initialBoard!!a3)!!a4)
-			 		if( chance == True && col1 == White && col2 == Black)
+	 				let play1 = player $ (\(Just x) -> x) ((initialBoard!!a1)!!a2)
+	 				let valid_move | play1 == Rook = Rook.validPath a1 a2 a3 a4 initialBoard
+	 							   | otherwise = True
+			 		if( chance == True && col1 == White && col2 == Black && valid_move)
 			 			then do 
 			 				let board = changeBoard a1 a2 a3 a4 initialBoard
 					 		let board' = (map.map) convert board
