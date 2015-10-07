@@ -32,7 +32,7 @@ noObstacle x1 y1 x2 y2 b = do
 										| otherwise 							   = True
 							check (x1 + 1) 
 						else do
-							let check x | x < x1 && (convert ((b!!x)!!y1)) /= "  " = False
-										| x < x1 && (convert ((b!!x)!!y1)) == "  " = check (x + 1)
+							let check x | x > x2 && (convert ((b!!x)!!y1)) /= "  " = False
+										| x > x2 && (convert ((b!!x)!!y1)) == "  " = check (x - 1)
 										| otherwise 							   = True
-							check (x2 + 1)
+							check (x1 - 1)
