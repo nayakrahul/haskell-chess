@@ -4,6 +4,8 @@ import qualified System.Console.ANSI as S
 import Rook
 import Bishop
 import Knight
+import King
+import Queen
 
 type Board = [[Maybe Piece]]
 data Piece = Piece{color::Color,player::Player}
@@ -108,7 +110,9 @@ move x b chance = do
 	 					let play1 = player $ (\(Just x) -> x) ((b!!a1)!!a2)
 	 					let valid_move | play1 == Rook = Rook.validPath a1 a2 a3 a4 b
 	 								   | play1 == Bishop = Bishop.validPath a1 a2 a3 a4 b
-										 | play1 == Knight = Knight.validPath a1 a2 a3 a4 b
+									   | play1 == Knight = Knight.validPath a1 a2 a3 a4 b
+									   | play1 == King = King.validPath a1 a2 a3 a4 b
+									   | play1 == Queen = Queen.validPath a1 a2 a3 a4 b
 	 								   | otherwise = True
 					 	if ((chance == True && col1 == White) || (chance == False && col1 == Black)) && col1 /= col2 && valid_move
 					 		then do
@@ -219,7 +223,9 @@ main = do
 	 				let play1 = player $ (\(Just x) -> x) ((initialBoard!!a1)!!a2)
 	 				let valid_move | play1 == Rook = Rook.validPath a1 a2 a3 a4 initialBoard
 	 							   | play1 == Bishop = Bishop.validPath a1 a2 a3 a4 initialBoard
-									 | play1 == Knight = Knight.validPath a1 a2 a3 a4 initialBoard
+								   | play1 == Knight = Knight.validPath a1 a2 a3 a4 initialBoard
+								   | play1 == King = King.validPath a1 a2 a3 a4 initialBoard
+								   | play1 == Queen = Queen.validPath a1 a2 a3 a4 initialBoard
 	 							   | otherwise = True
 			 		if( chance == True && col1 == White && col2 == Black && valid_move)
 			 			then do
