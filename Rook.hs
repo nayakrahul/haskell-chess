@@ -1,4 +1,4 @@
-module Rook (validPath,noObstacle) where
+module Rook (validPath) where
 
 convert (Just x) = show x 
 convert Nothing = " "
