@@ -1,0 +1,14 @@
+name: Chess
+version: 0.0.1
+cabal-version: -any
+build-type: Simple
+build-depends: base, ansi-terminal, containers
+homepage: https://github.com/sandipgupta/Haskell/
+synopsis: A 2-Player Chess Game
+description: 2-player based chess game
+category: Games
+author: Rahul Nayak, Sandip Kumar
+
+executable: Chess
+main-is: board.hs
+buildable: True

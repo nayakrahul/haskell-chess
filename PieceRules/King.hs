@@ -1,4 +1,4 @@
-module King (validPath) where
+module PieceRules.King (validPath) where
 
 convert (Just x) = show x
 convert Nothing = " "
