@@ -1,7 +1,11 @@
 # 2-Player Chess Game in Haskell
 
-1. Rahul Nayak
-2. Sandip Kumar
+```
+sudo apt-get install haskell-platform
+cabal update
+cabal install
+./dist/build/Chess/Chess
+```
 
  
 
